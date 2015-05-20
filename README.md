@@ -2,7 +2,7 @@
 
 # grunt-hashres
 
-[![Build Status](https://api.travis-ci.org/Luismahou/grunt-hashres.png)](https://travis-ci.org/Luismahou/grunt-hashres)
+[![Build Status](https://api.travis-ci.org/DramaFever/grunt-hashres.png)](https://travis-ci.org/DramaFever/grunt-hashres)
 
 Hashes your js and css files and rename the ```<script>``` and ```<link>``` declarations that refer to them in your html/php/etc files.
 

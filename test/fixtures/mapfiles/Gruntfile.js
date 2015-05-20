@@ -13,6 +13,9 @@ module.exports = function(grunt) {
   grunt.initConfig({
     hashres: {
       mapfiles: {
+        options: {
+          fileNameFormat: '${name}.${hash}.${ext}'
+        },
         src : ['myscripts.min.js', 'myscripts.min.js.map'],
         dest: ['*.html', '*.js']
       }

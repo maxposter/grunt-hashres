@@ -40,7 +40,7 @@ exports.hashAndSub = function(grunt, options) {
             lastIndex  = fileName.lastIndexOf('.'),
             renamed    = formatter({
               hash: md5,
-              name: fileName.slice(0, lastIndex),
+              name: fileName.slice(0, lastIndex).replace(/\.hash-[0-9a-f]{8}/g, ''),
               ext : fileName.slice(lastIndex + 1, fileName.length)
             }),
             nameSearch = searchFormatter({

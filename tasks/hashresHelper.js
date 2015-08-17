@@ -88,8 +88,7 @@ exports.hashAndSub = function(grunt, options) {
 
                     grunt.log.debug('Substituting ' + nameToNameSearch[value[0]] + ' by ' + value[1]);
                     destContents = destContents.replace(
-                        new RegExp('\/' + nameToNameSearch[value[0]], "g"),
-                        '/' + value[1]
+                        new RegExp(nameToNameSearch[value[0]], "g"), value[1]
                     );
                 });
                 grunt.log.debug('Saving the updated contents of the outination file');

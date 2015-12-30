@@ -19,7 +19,9 @@ module.exports = function(grunt) {
       fileNameFormat: '${hash}.${name}.cache.${ext}',
       encoding      : 'utf8',
       renameFiles   : true,
-      fileBasePath  : ''
+      fileBasePath  : '',
+      mapFile       : false,
+      mapFilePath   : ''
     });
 
     // Required properties: 'src' and 'dest'
@@ -32,7 +34,9 @@ module.exports = function(grunt) {
       encoding      : options.encoding,
       fileNameFormat: options.fileNameFormat,
       renameFiles   : options.renameFiles,
-      fileBasePath  : options.fileBasePath
+      fileBasePath  : options.fileBasePath,
+      mapFile       : options.mapFile,
+      mapFilePath   : options.mapFilePath
     });
   });
 

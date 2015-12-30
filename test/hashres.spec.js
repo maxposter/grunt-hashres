@@ -38,6 +38,7 @@ var runCommand = function(command, options, callback) {
 };
 
 var pathWithCustomOptions     = 'temp/hashres/options/with-custom-options';
+var pathWithMapFileOptions    = 'temp/hashres/options/with-map-file-options';
 var pathWithDefaultOptions    = 'temp/hashres/options/with-default-options';
 var pathSamePostFix           = 'temp/hashres/same-postfix';
 var pathWithSpecialCharacters = 'temp/hashres/options/with-special-characters';
@@ -46,12 +47,12 @@ var pathWithUrlParams         = 'temp/hashres/withurlparams';
 var pathMapfiles              = 'temp/hashres/mapfiles';
 
 vows.describe('hashres').addBatch({
-  'with custom options': {
+  'with map file options': {
     topic: function() {
       runCommand(
-        '../../../../node_modules/grunt-cli/bin/./grunt hashres:withCustomOptions',
-        { cwd: pathWithCustomOptions },
-        this.callback);
+          '../../../../node_modules/grunt-cli/bin/./grunt hashres:withMapFileOptions',
+          { cwd: pathWithMapFileOptions },
+          this.callback);
     },
     'hashes resources': function() {
       // Files have been renamed
@@ -62,113 +63,130 @@ vows.describe('hashres').addBatch({
       assert(html.indexOf('5a7a5b61-php.js') !== -1);
       assert(html.indexOf('3b97b071-php.css') !== -1);
     },
-  },
-  'with default options with same postfix': {
-    topic: function() {
-      runCommand(
-        '../../../node_modules/grunt-cli/bin/./grunt hashres:firstVersion',
-        { cwd: pathSamePostFix },
-        this.callback);
+    'with custom options': {
+      topic: function() {
+        runCommand(
+            '../../../../node_modules/grunt-cli/bin/./grunt hashres:withCustomOptions',
+            { cwd: pathWithCustomOptions },
+            this.callback);
+      },
+      'hashes resources': function() {
+        // Files have been renamed
+        assert(grunt.file.exists(pathWithCustomOptions + '/5a7a5b61-php.js'));
+        assert(grunt.file.exists(pathWithCustomOptions + '/3b97b071-php.css'));
+        // html has been updated
+        var html = grunt.file.read(pathWithCustomOptions + '/index.html');
+        assert(html.indexOf('5a7a5b61-php.js') !== -1);
+        assert(html.indexOf('3b97b071-php.css') !== -1);
+      },
     },
-    'hashes resources': function() {
-      // Files have been renamed
-      assert(grunt.file.exists(pathSamePostFix + '/scripts/21e6fab2.foobar.cache.js'));
-      assert(grunt.file.exists(pathSamePostFix + '/scripts/8e99730f.bar.cache.js'));
-      assert(grunt.file.exists(pathSamePostFix + '/styles/3b97b071.mobile.cache.css'));
-      assert(grunt.file.exists(pathSamePostFix + '/styles/d4f950b1.foo-mobile.cache.css'));
+    'with default options with same postfix': {
+      topic: function() {
+        runCommand(
+            '../../../node_modules/grunt-cli/bin/./grunt hashres:firstVersion',
+            { cwd: pathSamePostFix },
+            this.callback);
+      },
+      'hashes resources': function() {
+        // Files have been renamed
+        assert(grunt.file.exists(pathSamePostFix + '/scripts/21e6fab2.foobar.cache.js'));
+        assert(grunt.file.exists(pathSamePostFix + '/scripts/8e99730f.bar.cache.js'));
+        assert(grunt.file.exists(pathSamePostFix + '/styles/3b97b071.mobile.cache.css'));
+        assert(grunt.file.exists(pathSamePostFix + '/styles/d4f950b1.foo-mobile.cache.css'));
 
-      // index.html has been updated
-      var html1 = grunt.file.read(pathSamePostFix + '/index.html');
-      assert(html1.indexOf('scripts/21e6fab2.foobar.cache.js') !== -1);
-      assert(html1.indexOf('scripts/8e99730f.bar.cache.js') !== -1);
-      assert(html1.indexOf('styles/3b97b071.mobile.cache.css') !== -1);
-      assert(html1.indexOf('styles/d4f950b1.foo-mobile.cache.css') !== -1);
-    }
-  },
-  'with default options': {
-    topic: function() {
-      runCommand(
-        '../../../../node_modules/grunt-cli/bin/./grunt hashres:withDefaultOptions',
-        { cwd: pathWithDefaultOptions },
-        this.callback);
+        // index.html has been updated
+        var html1 = grunt.file.read(pathSamePostFix + '/index.html');
+        assert(html1.indexOf('scripts/21e6fab2.foobar.cache.js') !== -1);
+        assert(html1.indexOf('scripts/8e99730f.bar.cache.js') !== -1);
+        assert(html1.indexOf('styles/3b97b071.mobile.cache.css') !== -1);
+        assert(html1.indexOf('styles/d4f950b1.foo-mobile.cache.css') !== -1);
+      }
     },
-    'hashes resources': function() {
-      // Files have been renamed
-      assert(grunt.file.exists(pathWithDefaultOptions + '/scripts/5a7a5b61.js'));
-      assert(grunt.file.exists(pathWithDefaultOptions + '/styles/3b97b071.css'));
-      // index.html has been updated
-      var html1 = grunt.file.read(pathWithDefaultOptions + '/index.html');
-      assert(html1.indexOf('scripts/5a7a5b61.js') !== -1);
-      assert(html1.indexOf('styles/3b97b071.css') !== -1);
-      var html2 = grunt.file.read(pathWithDefaultOptions + '/index2.html');
-      assert(html2.indexOf('scripts/5a7a5b61.js') !== -1);
-      assert(html2.indexOf('styles/3b97b071.css') !== -1);
-    }
-  },
-  'with special characters': {
-    topic: function() {
-      runCommand(
-        '../../../../node_modules/grunt-cli/bin/./grunt hashres:withSpecialCharacters',
-        { cwd: pathWithSpecialCharacters },
-        this.callback);
+    'with default options': {
+      topic: function() {
+        runCommand(
+            '../../../../node_modules/grunt-cli/bin/./grunt hashres:withDefaultOptions',
+            { cwd: pathWithDefaultOptions },
+            this.callback);
+      },
+      'hashes resources': function() {
+        // Files have been renamed
+        assert(grunt.file.exists(pathWithDefaultOptions + '/scripts/5a7a5b61.js'));
+        assert(grunt.file.exists(pathWithDefaultOptions + '/styles/3b97b071.css'));
+        // index.html has been updated
+        var html1 = grunt.file.read(pathWithDefaultOptions + '/index.html');
+        assert(html1.indexOf('scripts/5a7a5b61.js') !== -1);
+        assert(html1.indexOf('styles/3b97b071.css') !== -1);
+        var html2 = grunt.file.read(pathWithDefaultOptions + '/index2.html');
+        assert(html2.indexOf('scripts/5a7a5b61.js') !== -1);
+        assert(html2.indexOf('styles/3b97b071.css') !== -1);
+      }
     },
-    'hashes resources': function() {
-      // Files have been renamed
-      assert(grunt.file.exists(pathWithSpecialCharacters + '/scripts/+3$3.js'));
-      assert(grunt.file.exists(pathWithSpecialCharacters + '/styles/+1.css'));
-      // index.html has been updated
-      var html = grunt.file.read(pathWithSpecialCharacters + '/index.html');
-      assert(html.indexOf('scripts/+3$3.js?5a7a5b61') !== -1);
-      assert(html.indexOf('styles/+1.css?3b97b071') !== -1);
-    }
-  },
-  'overriding hashed files': {
-    topic: function() {
-      runCommand(
-        '../../../node_modules/grunt-cli/bin/./grunt hashres:firstVersion hashres:secondVersion',
-        { cwd: pathOverridingHashedFiles },
-        this.callback);
+    'with special characters': {
+      topic: function() {
+        runCommand(
+            '../../../../node_modules/grunt-cli/bin/./grunt hashres:withSpecialCharacters',
+            { cwd: pathWithSpecialCharacters },
+            this.callback);
+      },
+      'hashes resources': function() {
+        // Files have been renamed
+        assert(grunt.file.exists(pathWithSpecialCharacters + '/scripts/+3$3.js'));
+        assert(grunt.file.exists(pathWithSpecialCharacters + '/styles/+1.css'));
+        // index.html has been updated
+        var html = grunt.file.read(pathWithSpecialCharacters + '/index.html');
+        assert(html.indexOf('scripts/+3$3.js?5a7a5b61') !== -1);
+        assert(html.indexOf('styles/+1.css?3b97b071') !== -1);
+      }
     },
-    'hashes resources overriding references in second hashres execution': function() {
-      // Both files have been renamed
-      assert(grunt.file.exists(pathOverridingHashedFiles + '/js-v1/688d441c.script.cache.js'));
-      assert(grunt.file.exists(pathOverridingHashedFiles + '/js-v2/cab5c571.script.cache.js'));
-      // index.html has been updated with the second version
-      var html = grunt.file.read(pathOverridingHashedFiles + '/index.html');
-      assert(html.indexOf('js/cab5c571.script.cache.js') !== -1);
-    }
-  },
-  'replacing with url parameters': {
-    topic: function() {
-      runCommand(
-        '../../../node_modules/grunt-cli/bin/./grunt hashres:withUrlParams',
-        { cwd: pathWithUrlParams },
-        this.callback);
+    'overriding hashed files': {
+      topic: function() {
+        runCommand(
+            '../../../node_modules/grunt-cli/bin/./grunt hashres:firstVersion hashres:secondVersion',
+            { cwd: pathOverridingHashedFiles },
+            this.callback);
+      },
+      'hashes resources overriding references in second hashres execution': function() {
+        // Both files have been renamed
+        assert(grunt.file.exists(pathOverridingHashedFiles + '/js-v1/688d441c.script.cache.js'));
+        assert(grunt.file.exists(pathOverridingHashedFiles + '/js-v2/cab5c571.script.cache.js'));
+        // index.html has been updated with the second version
+        var html = grunt.file.read(pathOverridingHashedFiles + '/index.html');
+        assert(html.indexOf('js/cab5c571.script.cache.js') !== -1);
+      }
     },
-    'hashes resources with a question mark at the end and does not chop off the question mark': function() {
-      assert(grunt.file.exists(pathWithUrlParams + '/8e99730f.myscripts.cache.js'));
-      assert(grunt.file.exists(pathWithUrlParams + '/8e99730f.test.cache.js'));
-      // index.html has been updated with the second version
-      var html = grunt.file.read(pathWithUrlParams + '/index.html');
-      assert(html.indexOf('8e99730f.myscripts.cache.js?v=4.2.0') !== -1);
-      assert(html.indexOf('8e99730f.test.cache.js') !== -1);
-    }
-  },
-  'check mapfiles are not substituted twice': {
-    topic: function() {
-      runCommand(
-        '../../../node_modules/grunt-cli/bin/./grunt hashres:mapfiles',
-        { cwd: pathMapfiles },
-        this.callback);
+    'replacing with url parameters': {
+      topic: function() {
+        runCommand(
+            '../../../node_modules/grunt-cli/bin/./grunt hashres:withUrlParams',
+            { cwd: pathWithUrlParams },
+            this.callback);
+      },
+      'hashes resources with a question mark at the end and does not chop off the question mark': function() {
+        assert(grunt.file.exists(pathWithUrlParams + '/8e99730f.myscripts.cache.js'));
+        assert(grunt.file.exists(pathWithUrlParams + '/8e99730f.test.cache.js'));
+        // index.html has been updated with the second version
+        var html = grunt.file.read(pathWithUrlParams + '/index.html');
+        assert(html.indexOf('8e99730f.myscripts.cache.js?v=4.2.0') !== -1);
+        assert(html.indexOf('8e99730f.test.cache.js') !== -1);
+      }
     },
-    'do not substitute mapfiles twice': function() {
-      assert(grunt.file.exists(pathMapfiles + '/09eda9f7.myscripts.min.cache.js'));
-      assert(grunt.file.exists(pathMapfiles + '/01abb432.myscripts.min.js.cache.map'));
-      var html = grunt.file.read(pathMapfiles + '/index.html');
-      assert(html.indexOf('09eda9f7.myscripts.min.cache.js') !== -1);
-      var mapfile = grunt.file.read(pathMapfiles + '/09eda9f7.myscripts.min.cache.js');
-      assert(mapfile.indexOf('01abb432.myscripts.min.js.cache.map') !== -1);
+    'check mapfiles are not substituted twice': {
+      topic: function() {
+        runCommand(
+            '../../../node_modules/grunt-cli/bin/./grunt hashres:mapfiles',
+            { cwd: pathMapfiles },
+            this.callback);
+      },
+      'do not substitute mapfiles twice': function() {
+        assert(grunt.file.exists(pathMapfiles + '/09eda9f7.myscripts.min.cache.js'));
+        assert(grunt.file.exists(pathMapfiles + '/01abb432.myscripts.min.js.cache.map'));
+        var html = grunt.file.read(pathMapfiles + '/index.html');
+        assert(html.indexOf('09eda9f7.myscripts.min.cache.js') !== -1);
+        var mapfile = grunt.file.read(pathMapfiles + '/09eda9f7.myscripts.min.cache.js');
+        assert(mapfile.indexOf('01abb432.myscripts.min.js.cache.map') !== -1);
 
+      }
     }
   }
 }).export(module);

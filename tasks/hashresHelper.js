@@ -85,7 +85,7 @@ exports.hashAndSub = function(grunt, options) {
                     mappingFiles[value[0]] = value[1];
                 });
 
-                fs.writeFileSync(options.mapFilePath + 'filesMapping.json', JSON.stringify(mappingFiles));
+                fs.writeFileSync(options.mapFilePath + 'filesMapping.json', JSON.stringify(mappingFiles, null, 4));
             } else {
                 // Substituting references to the given files with the hashed ones.
                 grunt.file.expand(f.dest).forEach(function(f) {

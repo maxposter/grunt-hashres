@@ -10,8 +10,7 @@
 
 var fs    = require('fs'),
     path  = require('path'),
-    utils = require('./hashresUtils'),
-    YAML = require('yamljs');
+    utils = require('./hashresUtils');
 
 exports.hashAndSub = function(grunt, options) {
 
@@ -86,7 +85,7 @@ exports.hashAndSub = function(grunt, options) {
                     mappingFiles[value[0]] = value[1];
                 });
 
-                fs.writeFileSync(options.mapFilePath + 'assets.yml', YAML.stringify(mappingFiles, 4));
+                fs.writeFileSync(options.mapFilePath + 'assets.json', JSON.stringify(mappingFiles, null, 4));
             } else {
                 // Substituting references to the given files with the hashed ones.
                 grunt.file.expand(f.dest).forEach(function(f) {
